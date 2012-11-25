@@ -1,0 +1,21 @@
+{
+  "name": "ember-validate",
+  "version": "0.0.1",
+  "author": "Mitchel Kelonye <kelonyemitchel@gmail.com>",
+  "description": "Ember data rest adapter for Google App Engine.",
+  "dependencies": {
+    "jquery": "*",
+    "jsdom": "*",
+    "handlebars": "*",
+    "ember": "*",
+    "coffee-script": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "component install && make"
+  },
+  "license": "MIT"
+}

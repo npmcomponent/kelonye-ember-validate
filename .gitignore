@@ -1,0 +1,6 @@
+syntax: glob
+
+components
+test/*.js
+node_modules
+npm-debug.log

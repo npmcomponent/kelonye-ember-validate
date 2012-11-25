@@ -1,0 +1,21 @@
+{
+  "name": "ember-validate",
+  "repo": "kelonye/validate",
+  "version": "latest",
+  "description": "An attempt at ember data validations.",
+  "dependencies": {
+    "component/jquery": "*",
+    "kelonye/handlebars.js": "*",
+    "kelonye/ember.js": "*",
+    "kelonye/data": "4"
+  },
+  "keywords": [
+    "ember",
+    "emberjs",
+    "ember-data",
+    "validate"
+  ],
+  "scripts": [
+    "lib/index.js"
+  ]
+}
