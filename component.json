@@ -6,7 +6,8 @@
   "dependencies": {
     "component/jquery": "*",
     "kelonye/handlebars.js": "*",
-    "kelonye/ember.js": "8"
+    "kelonye/ember.js": "*",
+    "kelonye/data": "8"
   },
   "keywords": [
     "ember",
