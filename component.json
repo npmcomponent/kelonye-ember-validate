@@ -7,7 +7,7 @@
     "component/jquery": "*",
     "kelonye/handlebars.js": "*",
     "kelonye/ember.js": "*",
-    "kelonye/data": "8"
+    "kelonye/data": "4"
   },
   "keywords": [
     "ember",

@@ -1,5 +1,11 @@
-Em = window.Em
-DS = window.DS
+global.window = require("jsdom").jsdom().createWindow()
+jQuery = require("jquery")
+require "handlebars"
+require "ember"
+global.window.Em = Ember
+require "./../components/kelonye-data"
+require "./../index"
+require "should"
 
 get = Em.get
 set = Em.set
@@ -46,17 +52,17 @@ describe "Presence:", ->
   it "fail on string", ->
     person.set "age", "dew"
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
   it "pass if float", ->
 
     person.set "age", 22.0
     person.validate()
-    expect(person.get "_errors.age.msg").not.toBeDefined()
-    expect(person.get "_isValid").toBeTruthy()
+    #should.not.exist person.get("_errors.age.msg")
+    person.get("_isValid").should.be.true
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 
   it "pass if +ve with positive = true", ->
 
@@ -71,20 +77,20 @@ describe "Presence:", ->
       ]
     person.set "age", 0
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
     person.set "age", -22
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
     person.set "age", 22
     person.validate()
-    expect(person.get "_errors.age.msg").not.toBeDefined()
-    expect(person.get "_isValid").toBeTruthy()
+    #should.not.exist person.get("_errors.age.msg")
+    person.get("_isValid").should.be.true
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 
 
   it "pass if -ve with negative = true", ->
@@ -101,20 +107,20 @@ describe "Presence:", ->
 
     person.set "age", 0
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
     person.set "age", 22
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
     person.set "age", -22
     person.validate()
-    expect(person.get "_errors.age.msg").not.toBeDefined()
-    expect(person.get "_isValid").toBeTruthy()
+    #should.not.exist person.get("_errors.age.msg")
+    person.get("_isValid").should.be.true
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 
 
   it "fail if 0 with zero==false", ->
@@ -130,8 +136,8 @@ describe "Presence:", ->
 
     person.set "age", 0
     person.validate()
-    expect(person.get "_errors.age.msg").toEqual "invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.age.msg").should.equal "invalid"
+    person.get("_isValid").should.be.false
 
 
   it "pass if 0 with zero==true", ->
@@ -148,8 +154,8 @@ describe "Presence:", ->
 
     person.set "age", 0
     person.validate()
-    expect(person.get "_errors.age.msg").not.toBeDefined()
-    expect(person.get "_isValid").toBeTruthy()
+    #should.not.exist person.get("_errors.age.msg")
+    person.get("_isValid").should.be.true
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 

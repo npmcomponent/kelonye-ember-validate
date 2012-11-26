@@ -1,5 +1,11 @@
-Em = window.Em
-DS = window.DS
+global.window = require("jsdom").jsdom().createWindow()
+jQuery = require("jquery")
+require "handlebars"
+require "ember"
+global.window.Em = Ember
+require "./../components/kelonye-data"
+require "./../index"
+require "should"
 
 get = Em.get
 set = Em.set
@@ -49,15 +55,15 @@ describe "Reg:", ->
 
     person.set "tel", "254000111222"
     person.validate()
-    expect(person.get "_errors.tel.msg").toEqual "Number is invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.tel.msg").should.equal "Number is invalid"
+    person.get("_isValid").should.be.false
 
   it "pass", ->
 
     person.set "tel", "254700111222"
     person.validate()
-    expect(person.get "_isValid").toBeTruthy()
+    person.get("_isValid").should.be.true
 
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 

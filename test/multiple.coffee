@@ -1,5 +1,11 @@
-Em = window.Em
-DS = window.DS
+global.window = require("jsdom").jsdom().createWindow()
+jQuery = require("jquery")
+require "handlebars"
+require "ember"
+global.window.Em = Ember
+require "./../components/kelonye-data"
+require "./../index"
+require "should"
 
 get = Em.get
 set = Em.set
@@ -62,32 +68,32 @@ describe "Multiple:", ->
   it "do", ->
     
     person.validate()
-    expect(person.get "_errors.tel.msg").toEqual ""
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.tel.msg").should.equal ""
+    person.get("_isValid").should.be.false
 
     person.set "tel", "2547"
     person.validate()
-    expect(person.get "_errors.tel.msg").toEqual "Short"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.tel.msg").should.equal "Short"
+    person.get("_isValid").should.be.false
 
     person.set "tel", "2547001110001111"
     person.validate()
-    expect(person.get "_errors.tel.msg").toEqual "Long"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.tel.msg").should.equal "Long"
+    person.get("_isValid").should.be.false
 
     person.set "tel", "254000111222"
     person.validate()
-    expect(person.get "_errors.tel.msg").toEqual "Number is invalid"
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_errors.tel.msg").should.equal "Number is invalid"
+    person.get("_isValid").should.be.false
 
     person.set "tel", "254700111222"
     person.validate()
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_isValid").should.be.false
 
     person.set "name", "Peter Wagenet"
     person.validate()
-    expect(person.get "_isValid").toBeTruthy()
+    person.get("_isValid").should.be.true
 
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
     

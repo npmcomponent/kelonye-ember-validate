@@ -1,5 +1,11 @@
-Em = window.Em
-DS = window.DS
+global.window = require("jsdom").jsdom().createWindow()
+jQuery = require("jquery")
+require "handlebars"
+require "ember"
+global.window.Em = Ember
+require "./../components/kelonye-data"
+require "./../index"
+require "should"
 
 get = Em.get
 set = Em.set
@@ -42,19 +48,20 @@ describe "Adapter:", ->
     adapter.destroy()
     person = null
 
+
   it "store creation", ->
 
     person = store.createRecord Person
     
     person.validate()
     #expect(person.get "_errors.name.msg").toEqual ""
-    expect(person.get "_isValid").toBeFalsy()
+    person.get("_isValid").should.be.false
 
     person.set "name", "Yehuda"
     person.validate()
-    expect(person.get "_errors.name.msg").not.toBeDefined()
-    expect(person.get "_isValid").toBeTruthy()
+    #should.not.exist person.get("_errors.name.msg")
+    person.get("_isValid").should.be.true
     store.commit()
-    expect(person.get "isSaving" ).toBeTruthy()
+    person.get("isSaving" ).should.be.true
 
 

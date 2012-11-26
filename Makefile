@@ -8,6 +8,6 @@ test:	$(JS)
 	coffee -bc $^
 
 clean:
-	rm -rf $(HTML) $(JS)
+	rm -rf components $(JS)
 
 .PHONY: clean test
