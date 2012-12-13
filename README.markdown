@@ -33,13 +33,13 @@ Available validators
           max: 13
           equal: true
         re:
-          msg: "Number is invalid" # custom error message
+          msg: "Invalid phone number format" # custom error message
           re: /^(?:0|\+?254)7\d{8}$/
       email: "email"
   person = Person.create()
   person.validate()
-  errors = person.get "_errors"
-  isValid = person.get "_isValid"
+  errors  = get person, "_errors"
+  isValid = get person, "_isValid"
 ```
 
 Testing
