@@ -8,11 +8,11 @@ module.exports = Em.Mixin.create
   # registers validators
   validators: 
     presence: require './lib/presence'
-    max: require './lib/max'
-    min: require './lib/min'
-    re: require './lib/re'
-    email: require './lib/email'
-    num: require './lib/num'
+    max:      require './lib/max'
+    min:      require './lib/min'
+    re:       require './lib/re'
+    email:    require './lib/email'
+    num:      require './lib/num'
 
   init: ->
 

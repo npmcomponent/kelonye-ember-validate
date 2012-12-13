@@ -45,41 +45,44 @@ describe "multiple:", ->
     assert get(person, "_errors.tel._isValid") is true # validation not applied yet
     assert get(person, "_isValid") is false
 
-  it.skip "tel is too short", ->
+  it "tel is too short", ->
 
+    set person, "name", "TJ"
     set person, "tel", "2547"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
+    assert get(person, "_errors.name.msg") is undefined
     assert get(person, "_errors.tel.msg") is "Short"
-    assert get(person, "_errors.name._isValid") is false
+    assert get(person, "_errors.name._isValid") is true
     assert get(person, "_errors.tel._isValid") is false
     assert get(person, "_isValid") is false
 
-  it.skip "tel is too long", ->
+  it "tel is too long", ->
 
+    set person, "name", "TJ"
     set person, "tel", "2547001110001111"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
+    assert get(person, "_errors.name.msg") is undefined
     assert get(person, "_errors.tel.msg") is "Long"
-    assert get(person, "_errors.name._isValid") is false
+    assert get(person, "_errors.name._isValid") is true
     assert get(person, "_errors.tel._isValid") is false
     assert get(person, "_isValid") is false
 
-  it.skip "tel format is wrong", ->
+  it "tel format is wrong", ->
 
+    set person, "name", "TJ"
     set person, "tel", "254000111222"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
+    assert get(person, "_errors.name.msg") is undefined
     assert get(person, "_errors.tel.msg") is "Number is invalid"
-    assert get(person, "_errors.name._isValid") is false
+    assert get(person, "_errors.name._isValid") is true
     assert get(person, "_errors.tel._isValid") is false
     assert get(person, "_isValid") is false
 
 
-  it.skip "name and tel are ok", ->
+  it "name and tel are ok", ->
 
     set person, "tel", "254700111222"
     person.validate()
