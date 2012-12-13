@@ -1,21 +1,20 @@
 {
   "name": "ember-validate",
-  "version": "0.0.1",
-  "author": "Mitchel Kelonye <kelonyemitchel@gmail.com>",
-  "description": "Ember data rest adapter for Google App Engine.",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Validate ember objects.",
   "dependencies": {
     "jquery": "*",
     "jsdom": "*",
     "handlebars": "*",
     "ember": "*",
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "component": "*"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "mocha": "*"
   },
   "scripts": {
     "test": "component install && make"
-  },
-  "license": "MIT"
+  }
 }

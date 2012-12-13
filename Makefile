@@ -2,7 +2,7 @@ COFFEE = $(shell find -name "*.coffee")
 JS = $(COFFEE:.coffee=.js)
 
 test:	$(JS)
-	mocha --reporter list
+	mocha --reporter min
 
 %.js: %.coffee
 	coffee -bc $^

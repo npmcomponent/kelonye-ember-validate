@@ -3,111 +3,63 @@ jQuery = require("jquery")
 require "handlebars"
 require "ember"
 global.window.Em = Ember
-require "./../components/kelonye-data"
-require "./../index"
-require "should"
+
+assert = require "assert"
 
 get = Em.get
 set = Em.set
 
 Person = window.Person
 person = window.person
-adapter = window.adapter
-store = window.store
 
-describe "Max:", ->
+describe "max:", ->
 
   beforeEach ->
-
-    Person = DS.Model.extend Em.V,
-      name: DS.attr "string"
-      tel: DS.attr "string"
-
-    Person.toString = ->
-      "App.Person"
-
-    adapter = DS.RESTAdapter.create
-
-      updateRecord: (store, type, record) ->
-
-    store = DS.Store.create
-      revision: 4
-      adapter: adapter
-    
-    person = store.createRecord Person
+    Person = Em.Object.extend require("./../index")
 
   afterEach ->
-    store.destroy()
-    adapter.destroy()
     person = null
 
-
-  it "@max required", ->
-
-    person.setProperties
-      "name": "Yehuda"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MaxV.create()
-          ]
-        }
-      ]
-
-    person.validate.should.throw()
-  
   it "fail", ->
-    person.setProperties
-      "name": "Yehuda"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MaxV.create
-              max: 2
-          ]
-        }
-      ]
+
+    Person = Person.extend
+      validations:
+        name:
+          max: 2
+
+    person = Person.create
+      name: "Yehuda"
 
     person.validate()
-    person.get("_errors.name.msg").should.equal "Long"
-    person.get("_isValid").should.be.false
-
+    assert get(person, "_errors.name.msg") is "Long"
+    assert get(person, "_isValid") is false
 
   it "pass", ->
-    person.setProperties
+
+    Person = Person.extend
+      validations:
+        name:
+          max: 5
+    
+    person = Person.create
       "name": "Tom"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MaxV.create
-              max: 5
-          ]
-        }
-      ]
 
     person.validate()
-    #should.not.exist person.get("_errors.name.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving").should.be.true
+    assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_isValid") is true
 
   it "pass if ==", ->
-    person.setProperties
+
+    Person = Person.extend
+      validations:
+        name:
+          max:
+            max: 3
+            equal: true
+    
+    person = Person.create
       "name": "Tom"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MaxV.create
-              max: 3
-              equal: true
-          ]
-        }
-      ]
 
     person.validate()
-    #should.not.exist person.get("_errors.name.msg")
-    person.get("_isValid").should.be.true
+    assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_isValid") is true

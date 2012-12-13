@@ -1,34 +1,51 @@
 Ember Validate [![Build Status](https://secure.travis-ci.org/kelonye/ember-validate.png?branch=master)](http://travis-ci.org/kelonye/ember-validate)
-============================
+=
 
-An attempt at ember data validations.
+Validate ember objects.
 
-See also,
+Goals
+------
 
-https://github.com/lcoq/ember-validations
-
-Features
-------------
-* custom error messages
-* multiple validators per property
+* Custom error messages
+* Apply multiple validators per property
 
 Usage
-------------
+------
 
 ### Presence
+
 ```
-DS.Model.extend Em.V,
-    name: DS.attr "string"
-    tel: DS.attr "string"
-    validations: [
-      {
-        on: "name"
-        validators: [
-          Em.PresenceV.create()
-        ]
-      }
-    ]
+person = Em.Object.create require("ember-validate"),
+  name: ""
+  tel: ""
+  validations:
+    name:
+      presence: {}
+
 ```
+
+### Email
+
+```
+person = Em.Object.create require("ember-validate"),
+  email: ""
+    validations:
+      email:
+        email: {}
+```
+
+### Regex
+
+```
+person = Em.Object.create require("ember-validate"),
+  tel: ""
+  validations:
+    tel: 
+      re:
+        exp: /^(?:0|\+?254)7\d{8}$/
+```
+
+
 ### Numericality
 ```
 DS.Model.extend Em.V,
@@ -45,23 +62,6 @@ DS.Model.extend Em.V,
         ]
       }
     ]
-```
-### Regex
-
-```
-person = DS.Model.extend Em.V,
-  name: DS.attr "string"
-  tel: DS.attr "string"
-  validations: [
-    {
-      on: "tel"
-      validators: [
-        Em.RegV.create
-          msg: "Number is invalid" 
-          exp: /^(?:0|\+?254)7\d{8}$/
-      ]
-    }
-  ]
 ```
 
 ### >
@@ -162,16 +162,28 @@ person = DS.Model.extend Em.V,
   ]
 ```
 
+### Ember data
+```
+
+DS.Model = DS.Model.extend require("ember-validate"),
+  name: ""
+  tel: ""
+  validations:
+    name:
+      presence: {}
+
+```
+
 Then call validate
 
 ```
 person.validate()
 
-_errors = person.get "_errors"
-_isValid = person.get "_isValid"
+errors = person.get "_errors"
+isValid = person.get "_isValid"
 ```
 
 Testing
 -----------
 
-``` rake jasmine:headless ```
+``` npm install && component install && make ```

@@ -1,13 +1,13 @@
 {
   "name": "ember-validate",
   "repo": "kelonye/validate",
-  "version": "latest",
-  "description": "An attempt at ember data validations.",
+  "version": "0.0.3",
+  "license": "MIT",
+  "description": "Validate ember objects",
   "dependencies": {
     "component/jquery": "*",
     "kelonye/handlebars.js": "*",
-    "kelonye/ember.js": "*",
-    "kelonye/data": "4"
+    "kelonye/ember.js": "*"
   },
   "keywords": [
     "ember",
@@ -16,6 +16,12 @@
     "validate"
   ],
   "scripts": [
+    "lib/email.js",
+    "lib/max.js",
+    "lib/min.js",
+    "lib/num.js",
+    "lib/presence.js",
+    "lib/re.js",
     "index.js"
   ]
 }

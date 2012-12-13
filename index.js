@@ -7,138 +7,85 @@ get = Em.get;
 
 set = Em.set;
 
-Em.PresenceV = Em.Object.extend({
-  msg: "",
-  validate: function(obj, attr) {
-    var val;
-    val = obj.get(attr);
-    if (!(val && val.match(/^.+$/mi))) {
-      return false;
-    }
-  }
-});
-
-Em.MinV = Em.Object.extend({
-  msg: "Short",
-  validate: function(obj, attr) {
-    var equal, min, val;
-    val = obj.get(attr);
-    min = this.get("min");
-    equal = this.get("equal");
-    if (equal && (val.length >= min) === false) {
-      return false;
-    } else if (val.length < min) {
-      return false;
-    }
-  }
-});
-
-Em.MaxV = Em.Object.extend({
-  msg: "Long",
-  validate: function(obj, attr) {
-    var equal, max, val;
-    val = obj.get(attr);
-    max = this.get("max");
-    equal = this.get("equal");
-    if (equal && (val.length <= max) === false) {
-      return false;
-    } else if (val.length > max) {
-      return false;
-    }
-  }
-});
-
-Em.RegV = Em.Object.extend({
-  msg: "",
-  validate: function(obj, attr) {
-    var val;
-    val = obj.get(attr);
-    if (!(val.match(this.get("exp")))) {
-      return false;
-    }
-  }
-});
-
-Em.NumV = Em.Object.extend({
-  msg: "invalid",
-  validate: function(obj, attr) {
-    var val;
-    val = parseInt(obj.get(attr));
-    if (isNaN(val)) {
-      return false;
-    } else if (this.get("zero") && val === 0) {
-      return true;
-    } else if (val === 0) {
-      return false;
-    } else if (this.get("positive") && val < 0) {
-      return false;
-    } else if (this.get("negative") && val > 0) {
-      return false;
-    }
-  }
-});
-
-Em.GmailV = Em.Object.extend({
-  msg: "invalid",
-  reg: /\S+@gmail.com/
-});
-
-Em.V = Em.Mixin.create({
-  _errors: Em.Object.create(),
+module.exports = Em.Mixin.create({
+  validators: {
+    presence: require('./lib/presence'),
+    max: require('./lib/max'),
+    min: require('./lib/min'),
+    re: require('./lib/re'),
+    email: require('./lib/email'),
+    num: require('./lib/num')
+  },
   init: function() {
-    var that, _ref;
+    var attr, that, validations, validator, _results;
     this._super();
     that = this;
-    return (_ref = this.get("validations")) != null ? _ref.forEach(function(obj) {
-      var path;
-      path = "_errors." + obj.on;
-      return that.set(path, {
-        valid: true,
-        msg: void 0
-      });
-    }) : void 0;
+    validations = get(this, "validations");
+    set(this, "_errors", Em.Object.create());
+    _results = [];
+    for (attr in validations) {
+      validator = validations[attr];
+      _results.push(set(that, "_errors." + attr, {
+        msg: void 0,
+        isValid: true
+      }));
+    }
+    return _results;
   },
   validate: function() {
-    var that;
+    var attr, isValid, options, that, validate, validations, validator, validators, _ref, _results;
     that = this;
-    return this.get("validations").forEach(function(obj) {
-      var attr, msg, path, valid, validator;
-      attr = obj.on;
-      validator = obj.validators.find(function(validator) {
-        if (validator.validate(that, attr) === false) {
-          return true;
+    validators = get(this, "validators");
+    set(this, "_isValid", true);
+    validate = function(validator, options) {
+      var isValid, msg, _options;
+      if (options.constructor.name !== "Object") {
+        _options = options;
+        options = {};
+        options[validator] = _options;
+      }
+      options["obj"] = that;
+      options["attr"] = attr;
+      validator = validators[validator].create(options);
+      isValid = validator.validate() === false ? false : true;
+      msg = isValid ? void 0 : get(validator, "msg");
+      set(that, "_errors." + attr, {
+        msg: msg,
+        _isValid: isValid
+      });
+      return isValid;
+    };
+    _ref = get(this, "validations");
+    _results = [];
+    for (attr in _ref) {
+      validations = _ref[attr];
+      if (typeof validations === "string") {
+        validator = validations;
+        isValid = validate(validator, {});
+        if (isValid === false) {
+          set(that, "_isValid", false);
+          break;
+        } else {
+          _results.push(void 0);
         }
-      });
-      if (validator) {
-        msg = validator.get("msg");
-        valid = false;
       } else {
-        msg = void 0;
-        valid = true;
+        _results.push((function() {
+          var _results1;
+          _results1 = [];
+          for (validator in validations) {
+            options = validations[validator];
+            isValid = validate(validator, options);
+            if (isValid === false) {
+              set(that, "_isValid", false);
+              break;
+            } else {
+              _results1.push(void 0);
+            }
+          }
+          return _results1;
+        })());
       }
-      path = "_errors." + attr;
-      return that.set(path, {
-        valid: valid,
-        msg: msg
-      });
-    });
-  },
-  _isValid: (function() {
-    var validator, _errors;
-    _errors = this.get("_errors");
-    if (_errors) {
-      validator = this.get("validations").find(function(obj) {
-        var attr;
-        attr = obj.on;
-        return !!!_errors.get(attr + ".valid");
-      });
-      if (validator) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return true;
     }
-  }).property("_errors@each.valid").volatile()
+    return _results;
+  }
 });

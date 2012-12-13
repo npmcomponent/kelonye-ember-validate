@@ -3,159 +3,127 @@ jQuery = require("jquery")
 require "handlebars"
 require "ember"
 global.window.Em = Ember
-require "./../components/kelonye-data"
-require "./../index"
-require "should"
+
+assert = require "assert"
 
 get = Em.get
 set = Em.set
 
 Person = window.Person
 person = window.person
-adapter = window.adapter
-store = window.store
 
-describe "Presence:", ->
+describe "num:", ->
 
   beforeEach ->
-
-    Person = DS.Model.extend Em.V,
-      name: DS.attr "string"
-      age: DS.attr "number"
-      validations: [
-        {
-          on: "age"
-          validators: [
-            Em.NumV.create()
-          ]
-        }
-      ]
-
-    Person.toString = ->
-      "App.Person"
-
-    adapter = DS.RESTAdapter.create
-
-      updateRecord: (store, type, record) ->
-
-    store = DS.Store.create
-      revision: 4
-      adapter: adapter
-    
-    person = store.createRecord Person
+    Person = Em.Object.extend require("./../index")
 
   afterEach ->
-    store.destroy()
-    adapter.destroy()
     person = null
 
   it "fail on string", ->
-    person.set "age", "dew"
-    person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
 
+    Person = Person.extend
+      validations:
+        age: "num"
+    
+    person = Person.create
+      age: "dew"
+    person.validate()
+    
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
+
+  
   it "pass if float", ->
 
-    person.set "age", 22.0
+    Person = Person.extend
+      validations:
+        age: "num"
+    
+    person = Person.create
+      age: 22.0
     person.validate()
-    #should.not.exist person.get("_errors.age.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving" ).should.be.true
 
+    assert get(person, "_errors.age.msg") is undefined
+    assert get(person, "_isValid") is true
+
+  
   it "pass if +ve with positive = true", ->
 
-    person.validations = [
-        {
-          on: "age"
-          validators: [
-            Em.NumV.create
-              positive: true
-          ]
-        }
-      ]
-    person.set "age", 0
-    person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
+    Person = Person.extend
+      validations:
+        age:
+          num:
+            positive: true
+    
+    person = Person.create
+      age: 0
 
-    person.set "age", -22
     person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
 
-    person.set "age", 22
+    set person, "age", -22
     person.validate()
-    #should.not.exist person.get("_errors.age.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving" ).should.be.true
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
+
+    set person, "age", 22
+    person.validate()
+    assert get(person, "_errors.age.msg") is undefined
+    assert get(person, "_isValid") is true
 
 
   it "pass if -ve with negative = true", ->
 
-    person.validations = [
-        {
-          on: "age"
-          validators: [
-            Em.NumV.create
-              negative: true
-          ]
-        }
-      ]
+    Person = Person.extend
+      validations:
+        age:
+          num:
+            negative: true
 
-    person.set "age", 0
+    person = Person.create()
+
+    set person, "age", 0
     person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
 
-    person.set "age", 22
+    set person, "age", 22
     person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
 
-    person.set "age", -22
+    set person, "age", -22
     person.validate()
-    #should.not.exist person.get("_errors.age.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving" ).should.be.true
-
+    assert get(person, "_errors.age.msg") is undefined
+    assert get(person, "_isValid") is true
 
   it "fail if 0 with zero==false", ->
 
-    person.validations = [
-        {
-          on: "age"
-          validators: [
-            Em.NumV.create()
-          ]
-        }
-      ]
+    Person = Person.extend
+      validations:
+        age: "num"
+    
+    person = Person.create
+      age: 0
 
-    person.set "age", 0
     person.validate()
-    person.get("_errors.age.msg").should.equal "invalid"
-    person.get("_isValid").should.be.false
+    assert get(person, "_errors.age.msg") is "invalid"
+    assert get(person, "_isValid") is false
 
 
   it "pass if 0 with zero==true", ->
 
-    person.validations = [
-        {
-          on: "age"
-          validators: [
-            Em.NumV.create
-              zero: true
-          ]
-        }
-      ]
+    Person = Person.extend
+      validations:
+        age:
+          num:
+            zero: true
 
-    person.set "age", 0
+    person = Person.create()
+
+    set person, "age", 0
     person.validate()
-    #should.not.exist person.get("_errors.age.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving" ).should.be.true
-
+    assert get(person, "_errors.age.msg") is undefined
+    assert get(person, "_isValid") is true

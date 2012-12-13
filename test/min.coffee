@@ -3,111 +3,64 @@ jQuery = require("jquery")
 require "handlebars"
 require "ember"
 global.window.Em = Ember
-require "./../components/kelonye-data"
-require "./../index"
-require "should"
+
+assert = require "assert"
 
 get = Em.get
 set = Em.set
 
 Person = window.Person
 person = window.person
-adapter = window.adapter
-store = window.store
 
-describe "Min:", ->
+describe "min", ->
 
   beforeEach ->
-
-    Person = DS.Model.extend Em.V,
-      name: DS.attr "string"
-      tel: DS.attr "string"
-
-    Person.toString = ->
-      "App.Person"
-
-    adapter = DS.RESTAdapter.create
-
-      updateRecord: (store, type, record) ->
-
-    store = DS.Store.create
-      revision: 4
-      adapter: adapter
-    
-    person = store.createRecord Person
+    Person = Em.Object.extend require("./../index")
 
   afterEach ->
-    store.destroy()
-    adapter.destroy()
     person = null
 
-
-  it "@min required", ->
-
-    person.setProperties
-      "name": "Yehuda"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MinV.create()
-          ]
-        }
-      ]
-
-    person.validate.should.throw()
-  
   it "fail", ->
-    person.setProperties
-      "name": "Yehuda"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MinV.create
-              min: 7
-          ]
-        }
-      ]
+
+    Person = Person.extend
+      validations:
+        name:
+          min: 10
+
+    person = Person.create
+      name: "Yehuda"
 
     person.validate()
-    person.get("_errors.name.msg").should.equal "Short"
-    person.get("_isValid").should.be.false
+    assert get(person, "_errors.name.msg") is "Short"
+    assert get(person, "_isValid") is false
 
 
   it "pass", ->
-    person.setProperties
-      "name": "Tom"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MinV.create
-              min: 2
-          ]
-        }
-      ]
+
+    Person = Person.extend
+      validations:
+        name:
+          min: 2
+
+    person = Person.create
+      name: "Tom"
 
     person.validate()
-    #should.not.exist person.get("_errors.name.msg")
-    person.get("_isValid").should.be.true
-    store.commit()
-    person.get("isSaving" ).should.be.true
+    assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_isValid") is true
 
   it "pass if ==", ->
-    person.setProperties
+
+    Person = Person.extend
+      validations:
+        name:
+          min:
+            min: 3
+            equal: true
+    
+    person = Person.create
       "name": "Tom"
-      "validations": [
-        {
-          on: "name"
-          validators: [
-            Em.MinV.create
-              min: 3
-              equal: true
-          ]
-        }
-      ]
 
     person.validate()
-    #should.not.exist person.get("_errors.name.msg")
-    person.get("_isValid").should.be.true
+    assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_isValid") is true

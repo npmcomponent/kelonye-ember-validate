@@ -3,105 +3,77 @@ Em = window.Em
 get = Em.get
 set = Em.set
 
-Em.PresenceV = Em.Object.extend 
-  msg: ""
-  validate: (obj, attr) ->
-    val = obj.get attr
-    if not (val and val.match /^.+$/mi)
-      false
-
-Em.MinV = Em.Object.extend 
-  msg: "Short"
-  validate: (obj, attr) ->
-    val = obj.get attr
-    min = @get "min"
-    equal = @get "equal"
-    if equal and (val.length >= min) is false
-      false
-    else if val.length < min
-      false
-
-Em.MaxV = Em.Object.extend 
-  msg: "Long"
-  validate: (obj, attr) ->
-    val = obj.get attr
-    max = @get "max"
-    equal = @get "equal"
-    if equal and (val.length <= max) is false
-      false
-    else if val.length > max
-      false
-
-Em.RegV = Em.Object.extend
-  msg: ""
-  validate: (obj, attr) ->
-    val = obj.get attr
-    if not(val.match @get("exp"))
-      false
-
-Em.NumV = Em.Object.extend
-  msg: "invalid"
-  validate: (obj, attr) ->
-    val = parseInt(obj.get attr)
-    if isNaN val
-      false
-    else if @get("zero") and val is 0
-      true
-    else if val is 0
-      false
-    else if @get("positive") and val < 0
-      false
-    else if @get("negative") and val > 0
-      false
-
-Em.GmailV = Em.Object.extend
-  msg: "invalid"
-  reg: /\S+@gmail.com/
-
-Em.V = Em.Mixin.create
+module.exports = Em.Mixin.create
   
-  _errors: Em.Object.create()
+  # register validators
+  validators: 
+    presence: require './lib/presence'
+    max: require './lib/max'
+    min: require './lib/min'
+    re: require './lib/re'
+    email: require './lib/email'
+    num: require './lib/num'
 
   init: ->
+
     @_super()
+
     that = @
-    @get("validations")?.forEach((obj) ->
-      path = "_errors."+obj.on
-      that.set path,
-        valid: true
+    validations = get @, "validations"
+
+    set @, "_errors", Em.Object.create()
+
+    for attr, validator of validations
+
+      set that, "_errors.#{attr}",
         msg: undefined
-    )
+        isValid: true
 
   validate: ->
-    that = @
-    @get("validations").forEach((obj) ->
-      attr = obj.on
-      validator = obj.validators.find((validator) ->
-        true if validator.validate(that, attr) is false
-      )
-      if validator
-        msg = validator.get("msg")
-        valid = false
-      else
-        msg = undefined
-        valid = true
-      path = "_errors."+attr
-      that.set path,
-        valid: valid
-        msg: msg
-    )
 
-  _isValid: (->
-    _errors = @get "_errors"
-    if _errors
-      validator = @get("validations").find((obj) ->
-        attr = obj.on
-        !!!_errors.get(attr+".valid")
-      )
-      if validator
-        false
+    # recreates validators
+
+    that = @
+    validators = get @, "validators"
+
+    set @, "_isValid", true
+
+    validate = (validator, options)->
+
+      if options.constructor.name isnt "Object"
+
+        # isnt a hash
+        _options = options
+        options = {}
+        options[validator] = _options
+
+      options["obj"] = that
+      options["attr"] = attr
+
+      validator = validators[validator].create options 
+      isValid = if validator.validate() is false then false else true
+      msg = if isValid then undefined else get validator, "msg"
+
+      set that, "_errors.#{attr}",
+        msg: msg
+        _isValid: isValid
+
+      isValid
+
+    for attr, validations of get @, "validations"
+
+      if typeof validations is "string"
+        validator = validations
+        isValid = validate validator, {}
+        if isValid is false
+          set that, "_isValid", false
+          break
+
       else
-        true
-    else
-      true 
-  ).property("_errors@each.valid").volatile()
+
+        for validator, options of validations
+          
+          isValid = validate validator, options
+          if isValid is false
+            set that, "_isValid", false
+            break
