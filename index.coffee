@@ -5,7 +5,7 @@ set = Em.set
 
 module.exports = Em.Mixin.create
   
-  # register validators
+  # registers validators
   validators: 
     presence: require './lib/presence'
     max: require './lib/max'
@@ -29,9 +29,8 @@ module.exports = Em.Mixin.create
         msg: undefined
         isValid: true
 
+  # recreates validations
   validate: ->
-
-    # recreates validators
 
     that = @
     validators = get @, "validators"
