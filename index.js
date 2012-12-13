@@ -27,7 +27,7 @@ module.exports = Em.Mixin.create({
       validator = validations[attr];
       _results.push(set(that, "_errors." + attr, {
         msg: void 0,
-        isValid: true
+        _isValid: true
       }));
     }
     return _results;

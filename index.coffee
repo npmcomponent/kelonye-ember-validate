@@ -27,7 +27,7 @@ module.exports = Em.Mixin.create
 
       set that, "_errors.#{attr}",
         msg: undefined
-        isValid: true
+        _isValid: true
 
   # recreates validations
   validate: ->
@@ -64,6 +64,7 @@ module.exports = Em.Mixin.create
       if typeof validations is "string"
         validator = validations
         isValid = validate validator, {}
+
         if isValid is false
           set that, "_isValid", false
           break

@@ -17,11 +17,11 @@ describe "presence:", ->
   beforeEach ->
 
     Person = Em.Object.extend require("./../index"),
-      name: ""
       validations:
         name: "presence"
 
-    person = Person.create()
+    person = Person.create
+      name: ""
 
   afterEach ->
     person = null
@@ -31,10 +31,12 @@ describe "presence:", ->
     person.validate()
 
     assert get(person, "_errors.name.msg") is ""
+    assert get(person, "_errors.name._isValid") is false
     assert get(person, "_isValid") is false
 
     set person, "name", "Yehuda"
     person.validate()
 
-    #assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_errors.name.msg") is undefined
+    assert get(person, "_errors.name._isValid") is true
     assert get(person, "_isValid") is true
