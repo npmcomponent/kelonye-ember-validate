@@ -9,10 +9,12 @@
     "kelonye/handlebars.js": "*",
     "kelonye/ember.js": "*"
   },
+  "development": {
+    "timoxley/assert": "*"
+  },
   "keywords": [
     "ember",
     "emberjs",
-    "ember-data",
     "validate"
   ],
   "scripts": [

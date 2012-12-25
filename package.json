@@ -4,17 +4,13 @@
   "license": "MIT",
   "description": "Validate ember objects.",
   "dependencies": {
-    "jquery": "*",
-    "jsdom": "*",
-    "handlebars": "*",
-    "ember": "*",
-    "coffee-script": "*",
-    "component": "*"
+    "coffee-script": "*"
   },
   "devDependencies": {
+    "mocha-phantomjs": "*",
+    "component": "*",
+    "jade": "*",
     "mocha": "*"
   },
-  "scripts": {
-    "test": "component install && make"
-  }
+  "script": "npm install && component install && make test"
 }

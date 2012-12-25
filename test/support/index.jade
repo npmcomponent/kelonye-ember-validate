@@ -1,0 +1,47 @@
+!!!5
+html(lang="en")
+  head
+    
+    meta(charset="utf-8")
+    
+    title Tests
+
+    link(rel="stylesheet", href="../../node_modules/mocha/mocha.css")
+
+  body
+
+    #mocha
+
+    script(src="../../build/build.js")
+    
+    :coffeescript
+      
+      window.jQuery = require "component-jquery"
+      require "kelonye-handlebars.js"
+      require "kelonye-ember.js"
+      
+      window.ValidateMixin = require "ember-validate"
+      window.assert = require "timoxley-assert"
+
+    script(src="../../node_modules/mocha/mocha.js")
+
+    :coffeescript
+      mocha.setup 'bdd'
+      #mocha.ui 'bdd'
+      #mocha.reporter 'html'
+
+    script(src="../email.js")
+    script(src="../max.js")
+    script(src="../max.js")
+    script(src="../min.js")
+    script(src="../multiple.js")
+    script(src="../num.js")
+    script(src="../presence.js")
+    script(src="../re.js")
+
+    :coffeescript
+
+      if window.mochaPhantomJS
+        mochaPhantomJS.run()
+      else
+        mocha.run()

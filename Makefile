@@ -1,15 +1,24 @@
-COFFEE = $(shell find -name "*.coffee")
-JS = $(COFFEE:.coffee=.js)
+ESCAPE = 'includes\|extends\|git\|hg\|components\|node_modules'
 
-# mocha --compilers coffee:coffee-script
+JADE = $(shell find -L -name "*.jade" | grep -v $(ESCAPE) )
+HTML = $(JADE:.jade=.html)
 
-test:	$(JS)
-	mocha --reporter min
+COFFEE 	= $(shell find -L -name "*.coffee" | grep -v $(ESCAPE) )
+JS 			= $(COFFEE:.coffee=.js)
+
+test: build
+	mocha-phantomjs -R dot test/support/index.html
+
+build: $(HTML) $(JS)
+	@component build --dev
+
+%.html: %.jade
+	jade -P < $< --path $< > $@
 
 %.js: %.coffee
-	coffee -bc $^
+	coffee -bc $<
 
 clean:
-	rm -rf components $(JS)
+	rm -rf $(HTML) $(JS)
 
 .PHONY: clean test

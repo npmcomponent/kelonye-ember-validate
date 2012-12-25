@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Tests</title>
+    <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../../build/build.js"></script><script type="text/javascript">
+(function() {
+
+  window.jQuery = require("component-jquery");
+
+  require("kelonye-handlebars.js");
+
+  require("kelonye-ember.js");
+
+  window.ValidateMixin = require("ember-validate");
+
+  window.assert = require("timoxley-assert");
+
+}).call(this);
+</script>
+    <script src="../../node_modules/mocha/mocha.js"></script><script type="text/javascript">
+(function() {
+
+  mocha.setup('bdd');
+
+}).call(this);
+</script>
+    <script src="../email.js"></script>
+    <script src="../max.js"></script>
+    <script src="../max.js"></script>
+    <script src="../min.js"></script>
+    <script src="../multiple.js"></script>
+    <script src="../num.js"></script>
+    <script src="../presence.js"></script>
+    <script src="../re.js"></script><script type="text/javascript">
+(function() {
+
+  if (window.mochaPhantomJS) {
+    mochaPhantomJS.run();
+  } else {
+    mocha.run();
+  }
+
+}).call(this);
+</script>
+  </body>
+</html>

@@ -1,11 +1,3 @@
-global.window = require("jsdom").jsdom().createWindow()
-jQuery = require("jquery")
-require "handlebars"
-require "ember"
-global.window.Em = Ember
-
-assert = require "assert"
-
 get = Em.get
 set = Em.set
 
@@ -16,7 +8,7 @@ describe "email:", ->
 
   beforeEach ->
 
-    Person = Em.Object.extend require("./../index"),
+    Person = Em.Object.extend ValidateMixin,
       validations:
         email: "email"
 
