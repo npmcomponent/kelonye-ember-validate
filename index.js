@@ -25,10 +25,7 @@ module.exports = Em.Mixin.create({
     _results = [];
     for (attr in validations) {
       validator = validations[attr];
-      _results.push(set(that, "_errors." + attr, {
-        msg: void 0,
-        _isValid: true
-      }));
+      _results.push(set(that, "_errors." + attr, void 0));
     }
     return _results;
   },
@@ -49,12 +46,40 @@ module.exports = Em.Mixin.create({
       validator = validators[validator].create(options);
       isValid = validator.validate() === false ? false : true;
       msg = isValid ? void 0 : get(validator, "msg");
-      set(that, "_errors." + attr, {
-        msg: msg,
-        _isValid: isValid
-      });
+      set(that, "_errors." + attr, msg);
       return isValid;
     };
+    /*
+        
+        Validate against any* of the following formats. Examples show how options are passed depending on their requirement.
+        
+        1.
+    
+          name: 'presence' # no options required by validator
+          
+          the above is same as,
+    
+          name:
+            prsence: true
+          
+        2.
+    
+          name:
+            max: 4 # one option required
+          
+          same as, 
+          
+          name:
+            max:
+              max: 4
+    
+        3.
+          name: 
+           max:
+             max: 4
+             equal: true #optional param
+    */
+
     _ref = get(this, "validations");
     _results = [];
     for (attr in _ref) {

@@ -24,13 +24,13 @@ describe "regex:", ->
     person.set "tel", "254000111222"
     person.validate()
     
-    assert get(person, "_errors.tel.msg").indexOf("doesn't match") isnt -1
-    assert get(person, "_isValid") is false
+    #assert.equal get(person, "_errors.tel").indexOf("doesn't match") isnt -1
+    assert.equal get(person, "_isValid"), false
 
   it "pass", ->
 
     person.set "tel", "254700111222"
     person.validate()
-    assert get(person, "_errors.tel.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.tel"), undefined
+    assert.equal get(person, "_isValid"), true
 

@@ -22,13 +22,11 @@ describe "presence:", ->
 
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
-    assert get(person, "_errors.name._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), ""
+    assert.equal get(person, "_isValid"), false
 
     set person, "name", "Yehuda"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_errors.name._isValid") is true
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_isValid"), true

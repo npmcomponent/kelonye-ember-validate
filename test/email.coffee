@@ -18,24 +18,21 @@ describe "email:", ->
   afterEach ->
     person = null
 
-  it "", ->
+  it "test", ->
 
     person.validate()
     
-    assert get(person, "_errors.email.msg") is "Wrong email format"
-    assert get(person, "_errors.email._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.email"), "Wrong email format"
+    assert.equal get(person, "_isValid"), false
 
     set person, "email", "jc.c"
     person.validate()
 
-    assert get(person, "_errors.email.msg") is "Wrong email format"
-    assert get(person, "_errors.email._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.email"), "Wrong email format"
+    assert.equal get(person, "_isValid"), false
 
     set person, "email", "j@c.c"
     person.validate()
 
-    assert get(person, "_errors.email.msg") is undefined
-    assert get(person, "_errors.email._isValid") is true
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.email"), undefined
+    assert.equal get(person, "_isValid"), true

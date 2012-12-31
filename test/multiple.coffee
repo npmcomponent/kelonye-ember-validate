@@ -20,58 +20,50 @@ describe "multiple:", ->
             max: 13
             equal: true
           re:
-            msg: "Number is invalid" 
+            msg: "Number, invalid" 
             re: /^(?:0|\+?254)7\d{8}$/
     person = Person.create()
 
   afterEach ->
     person = null
 
-  it "name and tel is absent", ->
+  it "name and tel, absent", ->
 
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
-    assert get(person, "_errors.tel.msg") is undefined
-    assert get(person, "_errors.name._isValid") is false
-    assert get(person, "_errors.tel._isValid") is true # validation not applied yet
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), ""
+    assert.equal get(person, "_errors.tel"), undefined #applied yet
+    assert.equal get(person, "_isValid"), false
 
-  it "tel is too short", ->
+  it "tel, too short", ->
 
     set person, "name", "TJ"
     set person, "tel", "2547"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_errors.tel.msg") is "Short"
-    assert get(person, "_errors.name._isValid") is true
-    assert get(person, "_errors.tel._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_errors.tel"), "Short"
+    assert.equal get(person, "_isValid"), false
 
-  it "tel is too long", ->
+  it "tel, too long", ->
 
     set person, "name", "TJ"
     set person, "tel", "2547001110001111"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_errors.tel.msg") is "Long"
-    assert get(person, "_errors.name._isValid") is true
-    assert get(person, "_errors.tel._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_errors.tel"), "Long"
+    assert.equal get(person, "_isValid"), false
 
-  it "tel format is wrong", ->
+  it "tel format, wrong", ->
 
     set person, "name", "TJ"
     set person, "tel", "254000111222"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_errors.tel.msg") is "Number is invalid"
-    assert get(person, "_errors.name._isValid") is true
-    assert get(person, "_errors.tel._isValid") is false
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_errors.tel"), "Number, invalid"
+    assert.equal get(person, "_isValid"), false
 
 
   it "name and tel are ok", ->
@@ -79,18 +71,14 @@ describe "multiple:", ->
     set person, "tel", "254700111222"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is ""
-    assert get(person, "_errors.tel.msg") is undefined
-    assert get(person, "_errors.name._isValid") is false
-    assert get(person, "_errors.tel._isValid") is true
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), ""
+    assert.equal get(person, "_errors.tel"), undefined
+    assert.equal get(person, "_isValid"), false
 
     set person, "name", "TJ"
     person.validate()
 
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_errors.tel.msg") is undefined
-    assert get(person, "_errors.name._isValid") is true
-    assert get(person, "_errors.tel._isValid") is true
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_errors.tel"), undefined
+    assert.equal get(person, "_isValid"), true
 

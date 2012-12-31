@@ -23,8 +23,8 @@ describe "min", ->
       name: "Yehuda"
 
     person.validate()
-    assert get(person, "_errors.name.msg") is "Short"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.name"), "Short"
+    assert.equal get(person, "_isValid"), false
 
 
   it "pass", ->
@@ -38,8 +38,8 @@ describe "min", ->
       name: "Tom"
 
     person.validate()
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_isValid"), true
 
   it "pass if ==", ->
 
@@ -54,5 +54,5 @@ describe "min", ->
       "name": "Tom"
 
     person.validate()
-    assert get(person, "_errors.name.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.name"), undefined
+    assert.equal get(person, "_isValid"), true

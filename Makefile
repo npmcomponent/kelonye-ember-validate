@@ -7,7 +7,7 @@ COFFEE 	= $(shell find -L -name "*.coffee" | grep -v $(ESCAPE) )
 JS 			= $(COFFEE:.coffee=.js)
 
 test: build
-	mocha-phantomjs -R dot test/support/index.html
+	@mocha-phantomjs -R dot test/support/index.html
 
 build: $(HTML) $(JS)
 	@component build --dev

@@ -22,8 +22,8 @@ describe "num:", ->
       age: "dew"
     person.validate()
     
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
   
   it "pass if float", ->
@@ -36,8 +36,8 @@ describe "num:", ->
       age: 22.0
     person.validate()
 
-    assert get(person, "_errors.age.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.age"), undefined
+    assert.equal get(person, "_isValid"), true
 
   
   it "pass if +ve with positive = true", ->
@@ -52,18 +52,18 @@ describe "num:", ->
       age: 0
 
     person.validate()
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
     set person, "age", -22
     person.validate()
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
     set person, "age", 22
     person.validate()
-    assert get(person, "_errors.age.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.age"), undefined
+    assert.equal get(person, "_isValid"), true
 
 
   it "pass if -ve with negative = true", ->
@@ -78,18 +78,18 @@ describe "num:", ->
 
     set person, "age", 0
     person.validate()
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
     set person, "age", 22
     person.validate()
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
     set person, "age", -22
     person.validate()
-    assert get(person, "_errors.age.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.age"), undefined
+    assert.equal get(person, "_isValid"), true
 
   it "fail if 0 with zero==false", ->
 
@@ -101,8 +101,8 @@ describe "num:", ->
       age: 0
 
     person.validate()
-    assert get(person, "_errors.age.msg") is "invalid"
-    assert get(person, "_isValid") is false
+    assert.equal get(person, "_errors.age"), "invalid"
+    assert.equal get(person, "_isValid"), false
 
 
   it "pass if 0 with zero==true", ->
@@ -117,5 +117,5 @@ describe "num:", ->
 
     set person, "age", 0
     person.validate()
-    assert get(person, "_errors.age.msg") is undefined
-    assert get(person, "_isValid") is true
+    assert.equal get(person, "_errors.age"), undefined
+    assert.equal get(person, "_isValid"), true
