@@ -26,9 +26,6 @@ Available validators
 * Numericality
 * <, >, <= and >=
 
-Example
----
-
 Example shows the 3 ways to pass validator options.
 
 ```
