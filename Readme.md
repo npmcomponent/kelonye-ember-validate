@@ -15,33 +15,58 @@ Install
 component install kelonye/ember-validate
 ```
 
-Usage
+Validators
 ---
-
-Available validators
 
 * Presence
 * Email
 * Regex
-* Numericality
-* <, >, <= and >=
+* Length
+* Comparisons
 
-Example shows the 3 ways to pass validator options.
+Example
+---
+
+javascript
 
 ```
   App.Person = Em.Object.extend require('ember-validate'),
+
     validations:
-      name: 'presence' # validate against presence validator
-      tel:
-        presence: true
-        min: 9
-        max:
-          max: 13
-          equal: true
-        re:
-          msg: "Invalid phone number format" # custom error message
-          re: /^(?:0|\+?254)7\d{8}$/
-      email: "email"
+
+      age: [
+
+        'presence'                  # presence
+
+        //
+
+        length: '@<3'               # length
+        length: '@>3'
+        length: '@<=3'
+        length: '@>=3'
+
+        compr: '@<3'                # comparison
+        compr: '@>3'
+        compr: '@<=3'
+        compr: '@>=3'
+
+
+        (obj, attr, options)->      # function
+          _options = options
+          if options isnt _options
+            false
+
+        [//, 'error msg']           # validators with custom error msg
+        ['presence', 'required']
+        [
+          (obj, attr, options)->
+          'error'
+        ]
+
+        ...
+
+      ]
+
   person = Person.create()
   person.validate()
   errors  = get person, "_errors"
@@ -49,7 +74,10 @@ Example shows the 3 ways to pass validator options.
 
   errors.get 'name'
   ...
+
 ```
+
+In addition, Em.Textfield and Em.Textarea have a .error class binding
 
 Testing
 ---

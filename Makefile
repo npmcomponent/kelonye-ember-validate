@@ -1,10 +1,8 @@
-ESCAPE = 'includes\|extends\|git\|hg\|components\|node_modules'
-
-JADE = $(shell find -L -name "*.jade" | grep -v $(ESCAPE) )
+JADE = $(shell find test -name "*.jade")
 HTML = $(JADE:.jade=.html)
 
-COFFEE 	= $(shell find -L -name "*.coffee" | grep -v $(ESCAPE) )
-JS 			= $(COFFEE:.coffee=.js)
+COFFEE = $(shell find test validators -name "*.coffee") index.coffee
+JS 		 = $(COFFEE:.coffee=.js)
 
 test: build
 	@mocha-phantomjs -R dot test/support/index.html
@@ -13,7 +11,7 @@ build: $(HTML) $(JS)
 	@component build --dev
 
 %.html: %.jade
-	jade -P < $< --path $< > $@
+	jade < $< --path $< > $@
 
 %.js: %.coffee
 	coffee -bc $<

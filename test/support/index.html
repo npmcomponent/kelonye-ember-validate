@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Tests</title>
-    <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
-  </head>
-  <body>
-    <div id="mocha"></div>
-    <script src="../../build/build.js"></script><script type="text/javascript">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>validate</title><link rel="stylesheet" href="../../node_modules/mocha/mocha.css"></head><body><div id="mocha"></div><script src="../../build/build.js"></script><script type="text/javascript">
 (function() {
 
   window.jQuery = require("component-jquery");
@@ -20,23 +11,28 @@
 
   window.assert = require("timoxley-assert");
 
+  /*
+  window.App = Em.Application.create()
+  App.ApplicationController = Em.Controller.extend()
+  App.ApplicationView = Em.View.extend()
+  
+  App.Router = Em.Router.extend
+    root: Em.Route.extend
+      index: Em.Route.extend
+        route: '/'
+        
+  App.initialize()
+  */
+
+
 }).call(this);
-</script>
-    <script src="../../node_modules/mocha/mocha.js"></script><script type="text/javascript">
+</script><script src="../../node_modules/mocha/mocha.js"></script><script type="text/javascript">
 (function() {
 
   mocha.setup('bdd');
 
 }).call(this);
-</script>
-    <script src="../email.js"></script>
-    <script src="../max.js"></script>
-    <script src="../max.js"></script>
-    <script src="../min.js"></script>
-    <script src="../multiple.js"></script>
-    <script src="../num.js"></script>
-    <script src="../presence.js"></script>
-    <script src="../re.js"></script><script type="text/javascript">
+</script><script src="../compr.js"></script><script src="../length.js"></script><script src="../email.js"></script><script src="../presence.js"></script><script src="../re.js"></script><script src="../multiple.js"></script><script src="../input.js"></script><script type="text/javascript">
 (function() {
 
   if (window.mochaPhantomJS) {
@@ -46,6 +42,4 @@
   }
 
 }).call(this);
-</script>
-  </body>
-</html>
+</script></body></html>

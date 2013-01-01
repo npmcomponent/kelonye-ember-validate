@@ -4,7 +4,7 @@ html(lang="en")
     
     meta(charset="utf-8")
     
-    title Tests
+    title validate
 
     link(rel="stylesheet", href="../../node_modules/mocha/mocha.css")
 
@@ -19,25 +19,33 @@ html(lang="en")
       window.jQuery = require "component-jquery"
       require "kelonye-handlebars.js"
       require "kelonye-ember.js"
-      
       window.ValidateMixin = require "ember-validate"
       window.assert = require "timoxley-assert"
+      ###
+      window.App = Em.Application.create()
+      App.ApplicationController = Em.Controller.extend()
+      App.ApplicationView = Em.View.extend()
+
+      App.Router = Em.Router.extend
+        root: Em.Route.extend
+          index: Em.Route.extend
+            route: '/'
+
+      App.initialize()
+      ###
 
     script(src="../../node_modules/mocha/mocha.js")
 
     :coffeescript
       mocha.setup 'bdd'
-      #mocha.ui 'bdd'
-      #mocha.reporter 'html'
 
+    script(src="../compr.js")
+    script(src="../length.js")
     script(src="../email.js")
-    script(src="../max.js")
-    script(src="../max.js")
-    script(src="../min.js")
-    script(src="../multiple.js")
-    script(src="../num.js")
     script(src="../presence.js")
     script(src="../re.js")
+    script(src="../multiple.js")
+    script(src="../input.js")
 
     :coffeescript
 

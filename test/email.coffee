@@ -4,35 +4,39 @@ set = Em.set
 Person = window.Person
 person = window.person
 
-describe "email:", ->
+describe 'email:', ->
 
   beforeEach ->
 
     Person = Em.Object.extend ValidateMixin,
       validations:
-        email: "email"
+        email: [
+          'presence'
+          'email'
+        ]
 
     person = Person.create
-      email: "g"
+      email: 'g'
 
   afterEach ->
     person = null
 
-  it "test", ->
-
+  it 'email is absent', ->
     person.validate()
+    assert.equal get(person, '_errors.email'), '¬ wrong email format'
+    assert.equal get(person, '_isValid'), false
+
+  it 'email format is wrong', ->
+    set person, 'email', 'jc.c'
+    person.validate()
+
+    assert.equal get(person, '_errors.email'), '¬ wrong email format'
+    assert.equal get(person, '_isValid'), false
+
+  it 'email is ok', ->
+    set person, 'email', 'j@c.c'
+    person.validate()
+
+    assert.equal get(person, '_errors.email'), undefined
+    assert.equal get(person, '_isValid'), true
     
-    assert.equal get(person, "_errors.email"), "Wrong email format"
-    assert.equal get(person, "_isValid"), false
-
-    set person, "email", "jc.c"
-    person.validate()
-
-    assert.equal get(person, "_errors.email"), "Wrong email format"
-    assert.equal get(person, "_isValid"), false
-
-    set person, "email", "j@c.c"
-    person.validate()
-
-    assert.equal get(person, "_errors.email"), undefined
-    assert.equal get(person, "_isValid"), true

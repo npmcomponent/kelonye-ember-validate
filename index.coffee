@@ -3,109 +3,115 @@ Em = window.Em
 get = Em.get
 set = Em.set
 
+# add .error class binding to text views
+ErrorClassMixin = Em.Mixin.create
+  classNameBindings: ['isValid::error']
+  error: (->
+    _for = get @, 'for'
+    get @, "context._errors.#{_for}"
+  ).property 'value', 'context._isValid', 'for'
+  isValid: (->
+    error = get @, 'error'
+    error is undefined
+  ).property 'error'
+Em.TextField.reopen ErrorClassMixin
+Em.TextArea.reopen ErrorClassMixin
+
+
+REGEX_EXPRS = Em.Object.create
+  #presence: [/^.+$/mi, '']
+  email: [/.+@.+\..+/, '¬ wrong email format']
+
+# mixin to apply to objects
 module.exports = Em.Mixin.create
   
-  # 'register' validators
-  validators: 
-    presence: require './lib/presence'
-    max:      require './lib/max'
-    min:      require './lib/min'
-    re:       require './lib/re'
-    email:    require './lib/email'
-    num:      require './lib/num'
-
   init: ->
-
+    
     @_super()
-
-    # set up _errors* object,
-    # *named so to avoid conflicts with ember-data
-    that = @
-    validations = get @, "validations"
-    set @, "_errors", Em.Object.create()
-    for attr, validator of validations
-      set that, "_errors.#{attr}", undefined
+    
+    set @, '_isValid', true
+    set @, '_errors', {}
 
   validate: ->
 
     that = @
-    validators = get @, "validators"
 
-    # reset _isValid property
-    # *named so to avoid conflicts with ember-data
-    set @, "_isValid", true
+    isValid = true
 
-    # fn that does actual validation
-    # @param {String} fn name of a 'registred' validator
-    # @param {hash} options to pass to validator fn
-    validate = (validator, options)->
+    validations = get that, 'validations'
 
-      if options.constructor.name isnt "Object"
+    for attr, validators of validations
 
-        # isnt a hash
-        _options = options
-        options = {}
-        options[validator] = _options
+      for item in validators
 
-      options["obj"] = that
-      options["attr"] = attr
+        [
+          isValid
+          error
+        ] = do ->
 
-      validator = validators[validator].create options 
-      isValid = if validator.validate() is false then false else true
-      msg = if isValid then undefined else get validator, "msg"
+          options = {}
 
-      set that, "_errors.#{attr}", msg
+          if item instanceof Array
+            [
+              item
+              error
+            ] = item
+          
+          if typeof item is 'string'
+            fn = item
+            options = get REGEX_EXPRS, "#{fn}"
+            if options
+              fn = 're'
+              [
+                options
+                _error
+              ] = options
 
-      isValid
+          else if item instanceof RegExp
+            fn = 're'
+            options = item
 
-    ###
-    
-    Validate against any* of the following formats. Examples show how options are passed depending on their requirement.
-    
-    1.
+          else if typeof item is 'function'
+            fn = item
 
-      name: 'presence' # no options required by validator
-      
-      the above is same as,
+          else
+            
+            keys = Object.keys item
+            fn = keys[0]
+            options = item[fn]
 
-      name:
-        prsence: true
-      
-    2.
+          #
+          if typeof fn is 'string'
+            fn = require "./validators/#{fn}"
 
-      name:
-        max: 4 # one option required
-      
-      same as, 
-      
-      name:
-        max:
-          max: 4
+          result = fn that, attr, options
+          if result instanceof Array
+            [
+              isValid
+              __error
+            ] = result
+          else
+            isValid = result
 
-    3.
-      name: 
-       max:
-         max: 4
-         equal: true #optional param
-    ###
+          isValid ?= true
 
+          #console.log "#{error} - #{_error} - #{__error}"
+          #console.log isValid
 
-    for attr, validations of get @, "validations"
+          error ?= _error ?= __error ?= ''
 
-      if typeof validations is "string"
-        # format 1
-        validator = validations
-        isValid = validate validator, {}
-
+          [
+            isValid
+            error
+          ]
+          
         if isValid is false
-          set that, "_isValid", false
+          set that, "_errors.#{attr}", error
           break
+        else
+          set that, "_errors.#{attr}", undefined
+      
+      if isValid is false
+        break
 
-      else
-
-        for validator, options of validations
-          # format 2, 3
-          isValid = validate validator, options
-          if isValid is false
-            set that, "_isValid", false
-            break
+    set that, '_isValid', isValid

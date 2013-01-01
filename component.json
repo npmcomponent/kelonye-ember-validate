@@ -18,12 +18,10 @@
     "validate"
   ],
   "scripts": [
-    "lib/email.js",
-    "lib/max.js",
-    "lib/min.js",
-    "lib/num.js",
-    "lib/presence.js",
-    "lib/re.js",
+    "validators/compr.js",
+    "validators/length.js",
+    "validators/presence.js",
+    "validators/re.js",
     "index.js"
   ]
 }

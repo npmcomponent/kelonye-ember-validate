@@ -10,8 +10,7 @@ describe "regex:", ->
 
     Person = Em.Object.extend ValidateMixin,
       validations:
-        tel: 
-          re: /^(?:0|\+?254)7\d{8}$/
+        tel: [/^(?:0|\+?254)7\d{8}$/]
 
     person = Person.create
       tel: ""
@@ -24,7 +23,7 @@ describe "regex:", ->
     person.set "tel", "254000111222"
     person.validate()
     
-    #assert.equal get(person, "_errors.tel").indexOf("doesn't match") isnt -1
+    #assert.equal get(person, "_errors.tel", '''254000111222 doesn't match //'
     assert.equal get(person, "_isValid"), false
 
   it "pass", ->
