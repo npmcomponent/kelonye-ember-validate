@@ -5,12 +5,11 @@
   "license": "MIT",
   "description": "Validate ember objects",
   "dependencies": {
-    "component/jquery": "*",
-    "kelonye/handlebars.js": "*",
-    "kelonye/ember.js": "*"
+    "kelonye/ember": "*"
   },
   "development": {
-    "timoxley/assert": "*"
+    "timoxley/assert": "*",
+    "kelonye/ui.css": "*"
   },
   "keywords": [
     "ember",
@@ -18,10 +17,12 @@
     "validate"
   ],
   "scripts": [
-    "validators/compr.js",
-    "validators/length.js",
-    "validators/presence.js",
-    "validators/re.js",
+    "lib/validators/compr.js",
+    "lib/validators/length.js",
+    "lib/validators/presence.js",
+    "lib/validators/re.js",
+    "lib/text_support.js",
+    "lib/index.js",
     "index.js"
   ]
 }

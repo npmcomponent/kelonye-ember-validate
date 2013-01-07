@@ -7,6 +7,7 @@ html(lang="en")
     title validate
 
     link(rel="stylesheet", href="../../node_modules/mocha/mocha.css")
+    link(rel="stylesheet", href="../../build/build.css")
 
   body
 
@@ -15,10 +16,8 @@ html(lang="en")
     script(src="../../build/build.js")
     
     :coffeescript
-      
-      window.jQuery = require "component-jquery"
-      require "kelonye-handlebars.js"
-      require "kelonye-ember.js"
+
+      require "kelonye-ember"
       window.ValidateMixin = require "ember-validate"
       window.assert = require "timoxley-assert"
       ###

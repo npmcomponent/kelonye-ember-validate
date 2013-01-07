@@ -28,9 +28,8 @@ describe 'input:', ->
   afterEach ->
     person = null
     textField.destroy()
-
+  
   it "input's @error==undefined and @isValid==true", ->
-
     assert.equal get( textField, 'value' ), ''
     assert.equal get( textField, 'error' ), undefined
     assert.equal get( textField, 'isValid' ), true

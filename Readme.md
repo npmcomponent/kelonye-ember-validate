@@ -57,10 +57,10 @@ javascript
             false
 
         [//, 'error msg']           # validators with custom error msg
-        ['presence', 'required']
+        ['presence', '¬ required']
         [
           (obj, attr, options)->
-          'error'
+          '¬ error'
         ]
 
         ...

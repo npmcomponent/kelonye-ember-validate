@@ -1,7 +1,7 @@
 JADE = $(shell find test -name "*.jade")
 HTML = $(JADE:.jade=.html)
 
-COFFEE = $(shell find test validators -name "*.coffee") index.coffee
+COFFEE = $(shell find test lib -name "*.coffee") index.coffee
 JS 		 = $(COFFEE:.coffee=.js)
 
 test: build
