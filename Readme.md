@@ -3,17 +3,18 @@ Ember Validate [![Build Status](https://secure.travis-ci.org/kelonye/ember-valid
 
 Validate ember objects.
 
-Goals
+Install
+---
+
+```
+component install kelonye/ember-validate
+```
+
+Features
 ---
 
 * Custom error messages
 * Multiple validators per property
-
-Install
----
-```
-component install kelonye/ember-validate
-```
 
 Validators
 ---
@@ -22,7 +23,7 @@ Validators
 * Email
 * Regex
 * Length
-* Comparisons
+* Comparison
 
 Example
 ---
@@ -38,8 +39,6 @@ javascript
 
         'presence'                  # presence
 
-        //
-
         length: '@<3'               # length
         length: '@>3'
         length: '@<=3'
@@ -50,13 +49,12 @@ javascript
         compr: '@<=3'
         compr: '@>=3'
 
-
         (obj, attr, options)->      # function
           _options = options
           if options isnt _options
             false
 
-        [//, 'error msg']           # validators with custom error msg
+        [/\d+/, 'error msg']           # validators with custom error msg
         ['presence', '¬ required']
         [
           (obj, attr, options)->
