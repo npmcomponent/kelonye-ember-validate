@@ -77,7 +77,7 @@ javascript
 
 ```
 
-In addition, Em.Textfield and Em.Textarea have a .error class binding
+Requiring this also adds a .error class binding to Em.Textfield and Em.Textarea
 
 Testing
 ---

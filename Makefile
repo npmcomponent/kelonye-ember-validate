@@ -2,7 +2,7 @@ JADE = $(shell find test -name "*.jade")
 HTML = $(JADE:.jade=.html)
 
 COFFEE = $(shell find test lib -name "*.coffee") index.coffee
-JS 		 = $(COFFEE:.coffee=.js)
+JS = $(COFFEE:.coffee=.js)
 
 test: build
 	@mocha-phantomjs -R dot test/support/index.html
@@ -17,6 +17,6 @@ build: $(HTML) $(JS)
 	coffee -bc $<
 
 clean:
-	rm -rf $(HTML) $(JS)
+	rm -rf $(HTML) $(JS) build
 
 .PHONY: clean test
