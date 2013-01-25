@@ -9,23 +9,23 @@ Em.TextSupport.reopen
   error: undefined
   classNameBindings: ['isValid::error']
 
-  init: ->
+  didInsertElement: ->
 
     @_super()
 
     that = @
-    _for    = get @, 'for'
+    _for = get @, 'for'
     context = get @, 'context'
-    context.reopen
+    
+    key = "_errors.#{_for}"
+    context.addObserver key, ->
+      error = get context, key
+      isValid = error is undefined
+      that.setProperties
+        error: error
+        isValid: isValid
 
-      validate: ->
-
-        @_super()
-        
-        error   = get @, "_errors.#{_for}"
-        isValid = error is undefined
-        
-        that.setProperties
-          error: error
-          isValid: isValid
-        
+  willDestroyElement: ->
+    _for = get @, 'for'
+    context = get @, 'context'
+    context.removeObserver "_errors.#{_for}"
