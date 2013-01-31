@@ -7,7 +7,7 @@ set = Em.set;
 
 Person = person = textField = void 0;
 
-describe('input:', function() {
+describe('Text Support:', function() {
   beforeEach(function() {
     Person = Em.Object.extend(ValidateMixin, {
       validations: {
@@ -27,7 +27,7 @@ describe('input:', function() {
     });
   });
   afterEach(function() {
-    person = null;
+    person.destroy();
     return textField.destroy();
   });
   it("input's @error==undefined and @isValid==true", function() {

@@ -3,7 +3,7 @@ set = Em.set
 
 Person = person = textField = undefined
 
-describe 'input:', ->
+describe 'Text Support:', ->
 
   beforeEach ->
 
@@ -26,7 +26,7 @@ describe 'input:', ->
       textField.append()
 
   afterEach ->
-    person = null
+    person.destroy()
     textField.destroy()
   
   it "input's @error==undefined and @isValid==true", ->

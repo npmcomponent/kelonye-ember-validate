@@ -37,27 +37,52 @@ javascript
 
       age: [
 
-        'presence'                  # presence
+        'presence'                      # presence
 
-        length: '@<3'               # length
+        /\d+/                           # regex
+
+        length: '@<3'                   # length
         length: '@>3'
         length: '@<=3'
         length: '@>=3'
 
-        compr: '@<3'                # comparison
+        compr: '@<3'                    # comparison
         compr: '@>3'
         compr: '@<=3'
         compr: '@>=3'
 
-        (obj, attr, options)->      # function
+        (obj, attr, options)->          # function validator
           _options = options
           if options isnt _options
             false
 
-        [/\d+/, 'error msg']           # validators with custom error msg
-        ['presence', '¬ required']
+        # validators with custom error messages
+        
         [
+          'presence'                    # presence
+          '¬ required'
+        ]
+
+        [                               # regex
+          /\d+/
+          '¬ unmatched'
+        ]
+
+        [                               # length
+          length: '@<3'
+          '¬ too long'
+        ]
+
+        [                               # comparison
+          compr: '@<3'
+          '¬ too long'
+        ]
+
+        [                               # function
           (obj, attr, options)->
+            # obj is person
+            # attr is age
+            # hash is {}
           '¬ error'
         ]
 
@@ -65,12 +90,13 @@ javascript
 
       ]
 
+  # create person and validate
   person = Person.create()
   person.validate()
   errors  = get person, "_errors"
   isValid = get person, "_isValid"
 
-  errors.get 'name'
+  errors.get 'age'
   ...
 
 ```
