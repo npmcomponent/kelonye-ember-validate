@@ -101,7 +101,7 @@ javascript
 
 ```
 
-Requiring this also adds a .error class binding to Em.Textfield and Em.Textarea
+See [kelonye/ember-error-support](https://github.com/kelonye/ember-error-support) on use with text fields.
 
 Testing
 ---

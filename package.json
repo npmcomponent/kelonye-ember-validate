@@ -2,7 +2,7 @@
   "name": "ember-validate",
   "version": "0.0.2",
   "license": "MIT",
-  "description": "Validate ember objects.",
+  "description": "",
   "devDependencies": {
     "coffee-script": "*",
     "mocha-phantomjs": "*",

@@ -20,18 +20,6 @@ html(lang="en")
       require "kelonye-ember"
       window.ValidateMixin = require "ember-validate"
       window.assert = require "timoxley-assert"
-      ###
-      window.App = Em.Application.create()
-      App.ApplicationController = Em.Controller.extend()
-      App.ApplicationView = Em.View.extend()
-
-      App.Router = Em.Router.extend
-        root: Em.Route.extend
-          index: Em.Route.extend
-            route: '/'
-
-      App.initialize()
-      ###
 
     script(src="../../node_modules/mocha/mocha.js")
 
@@ -44,7 +32,6 @@ html(lang="en")
     script(src="../presence.js")
     script(src="../re.js")
     script(src="../multiple.js")
-    script(src="../text_support.js")
 
     :coffeescript
 

@@ -21,7 +21,6 @@
     "lib/validators/length.js",
     "lib/validators/presence.js",
     "lib/validators/re.js",
-    "lib/text_support.js",
     "lib/index.js",
     "index.js"
   ]
