@@ -4,7 +4,7 @@ html(lang="en")
     
     meta(charset="utf-8")
     
-    title validate
+    title test
 
     link(rel="stylesheet", href="../../node_modules/mocha/mocha.css")
     link(rel="stylesheet", href="../../build/build.css")
@@ -26,12 +26,12 @@ html(lang="en")
     :coffeescript
       mocha.setup 'bdd'
 
-    script(src="../compr.js")
-    script(src="../length.js")
-    script(src="../email.js")
-    script(src="../presence.js")
-    script(src="../re.js")
-    script(src="../multiple.js")
+    script(src="../lib/compr.js")
+    script(src="../lib/length.js")
+    script(src="../lib/email.js")
+    script(src="../lib/presence.js")
+    script(src="../lib/re.js")
+    script(src="../lib/multiple.js")
 
     :coffeescript
 
