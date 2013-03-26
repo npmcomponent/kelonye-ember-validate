@@ -7,7 +7,7 @@ TEST_JS = $(TEST_COFFEE:test/src/%.coffee=test/lib/%.js)
 test: node_modules build test/lib $(TEST_JS) test/support/index.html
 	@mocha-phantomjs -R dot test/support/index.html
 
-node_modules: package.json
+node_modules:
 	@npm install
 
 build: components lib $(LIB)
@@ -16,7 +16,7 @@ build: components lib $(LIB)
 test/lib:
 	@mkdir -p test/lib
 
-components: component.json
+components:
 	@component install --dev
 
 lib:
