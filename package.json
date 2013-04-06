@@ -1,13 +1,13 @@
 {
   "name": "ember-validate",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "license": "MIT",
   "description": "",
   "devDependencies": {
+    "jade": "*",
+    "mocha": "*",
     "component": "*",
     "coffee-script": "*",
-    "jade": "*",
-    "mocha-phantomjs": "*",
-    "mocha": "*"
+    "mocha-phantomjs": "*"
   }
 }

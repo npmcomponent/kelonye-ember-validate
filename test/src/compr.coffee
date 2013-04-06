@@ -7,13 +7,11 @@ person = window.person
 describe 'Compr:', ->
 
   beforeEach ->
-
     Person = Em.Object.extend ValidateMixin,
       validations:
         age: [
           compr: '@<10' 
         ]
-
     person = Person.create()
 
   afterEach ->
