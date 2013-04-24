@@ -1,5 +1,6 @@
 {
   "name": "ember-validate",
+  "repo": "kelonye/ember-validate",
   "version": "0.0.1",
   "license": "MIT",
   "description": "Validate ember objects",
