@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>test</title>
+    <link rel='stylesheet' href='../node_modules/mocha/mocha.css'>
+  </head>
+  <body>
+    <div id='mocha'></div>
+    <script src='../public/public.js'></script>
+    <script type='text/javascript'>
+      window.ValidateMixin = require('ember-validate');
+      window.assert = require('timoxley-assert');
+    </script>
+    <script src='../node_modules/mocha/mocha.js'></script>
+    <script type='text/javascript'>
+      mocha.setup('bdd');
+    </script>
+    <script src='compr.js'></script>
+    <script src='length.js'></script>
+    <script src='email.js'></script>
+    <script src='presence.js'></script>
+    <script src='re.js'></script>
+    <script src='multiple.js'></script>
+    <script type='text/javascript'>
+      mocha.run();
+    </script>
+  </body>
+</html>

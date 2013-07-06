@@ -1,37 +1,18 @@
-SRC = $(shell find src -name "*.coffee" -type f)
-LIB = $(SRC:src/%.coffee=lib/%.js)
+component = ./node_modules/component-hooks/node_modules/.bin/component
+lib=$(shell find lib)
 
-TEST_COFFEE = $(shell find test/src -name "*.coffee" -type f)
-TEST_JS = $(TEST_COFFEE:test/src/%.coffee=test/lib/%.js)
-
-test: node_modules build test/lib $(TEST_JS) test/support/index.html
-	@mocha-phantomjs -R dot test/support/index.html
+default: node_modules components public
 
 node_modules:
 	@npm install
 
-build: components lib $(LIB)
-	@component build --dev
-
-test/lib:
-	@mkdir -p test/lib
-
 components:
-	@component install --dev
+	@$(component) install --dev
 
-lib:
-	@mkdir -p lib
-
-lib/%.js: src/%.coffee
-	coffee -bcj $@ $<
-
-test/lib/%.js: test/src/%.coffee
-	coffee -bcj $@ $<
-
-test/support/index.html: test/support/index.jade
-	jade < $< --path $< > $@
+public: $(lib)
+	@$(component) build --dev -n $@ -o $@
 
 clean:
-	@rm -rf lib build test/lib test/support/index.html
+	@rm -rf public
 
-.PHONY: clean test
+.PHONY: clean

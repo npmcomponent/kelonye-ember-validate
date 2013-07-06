@@ -1,13 +1,10 @@
 {
   "name": "ember-validate",
   "version": "0.0.1",
-  "license": "MIT",
-  "description": "",
+  "description": "Validate ember objects",
   "devDependencies": {
-    "jade": "*",
     "mocha": "*",
-    "component": "*",
-    "coffee-script": "*",
-    "mocha-phantomjs": "*"
-  }
+    "component-hooks": "*"
+  },
+  "license": "MIT"
 }

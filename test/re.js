@@ -1,0 +1,29 @@
+var Person;
+var person;
+
+describe('regex:', function() {
+  beforeEach(function() {
+    Person = Em.Object.extend(ValidateMixin, {
+      validations: {
+        tel: [/^(?:0|\+?254)7\d{8}$/]
+      }
+    });
+    person = Person.create({
+      tel: ''
+    });
+  });
+  afterEach(function() {
+    person = null;
+  });
+  it('fail', function() {
+    person.set('tel', '254000111222');
+    person.validate();
+    assert.equal(person.get('_isValid'), false);
+  });
+  it('pass', function() {
+    person.set('tel', '254700111222');
+    person.validate();
+    assert.equal(person.get('_errors.tel'), undefined);
+    assert.equal(person.get('_isValid'), true);
+  });
+});

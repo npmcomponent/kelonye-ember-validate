@@ -1,21 +1,13 @@
 {
   "name": "ember-validate",
-  "repo": "kelonye/ember-validate",
   "version": "0.0.1",
-  "license": "MIT",
   "description": "Validate ember objects",
   "dependencies": {
     "kelonye/ember": "*"
   },
   "development": {
-    "timoxley/assert": "*",
-    "kelonye/ui.css": "*"
+    "timoxley/assert": "*"
   },
-  "keywords": [
-    "ember",
-    "emberjs",
-    "validate"
-  ],
   "scripts": [
     "lib/validators/compr.js",
     "lib/validators/length.js",
@@ -23,5 +15,6 @@
     "lib/validators/re.js",
     "lib/index.js",
     "index.js"
-  ]
+  ],
+  "license": "MIT"
 }
