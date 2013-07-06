@@ -8,13 +8,13 @@
   "development": {
     "timoxley/assert": "*"
   },
+  "main": "lib/index.js",
   "scripts": [
     "lib/validators/compr.js",
     "lib/validators/length.js",
     "lib/validators/presence.js",
     "lib/validators/re.js",
-    "lib/index.js",
-    "index.js"
+    "lib/index.js"
   ],
   "license": "MIT"
 }
