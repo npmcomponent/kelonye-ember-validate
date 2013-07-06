@@ -30,7 +30,7 @@ Example
 
 ```javascript
 
-  App.Person = Em.Object.extend({ require('ember-validate'), {
+  var Person = Em.Object.extend( require('ember-validate'), {
 
     validations: {
 
