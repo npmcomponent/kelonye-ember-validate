@@ -28,84 +28,96 @@ Validators
 Example
 ---
 
-javascript
+```javascript
 
-```
-  App.Person = Em.Object.extend require('ember-validate'),
+  App.Person = Em.Object.extend({ require('ember-validate'), {
 
-    validations:
+    validations: {
 
       age: [
 
-        'presence'                      # presence
+        'presence',                      // presence
 
-        /\d+/                           # regex
+        /\d+/,                           // regex
 
-        length: '@<3'                   # length
-        length: '@>3'
-        length: '@<=3'
-        length: '@>=3'
+        length: '@<3',                   // length
+        length: '@>3',
+        length: '@<=3',
+        length: '@>=3',
 
-        compr: '@<3'                    # comparison
-        compr: '@>3'
-        compr: '@<=3'
-        compr: '@>=3'
+        compr: '@<3',                    // comparison
+        compr: '@>3',
+        compr: '@<=3',
+        compr: '@>=3',
 
-        (obj, attr, options)->          # function validator
-          _options = options
-          if options isnt _options
-            false
+        function(obj, attr, options){    // function validator
+          /** here,
+            * obj is a Person instance
+            * attr is 'age'
+            * options is {}
+            */
+          if (obj.get(attr) == ''){
+            return false;
+          }
+        },
 
-        # validators with custom error messages
+        // you can provide custom error messages like so,
         
         [
-          'presence'                    # presence
+          'presence',                    // presence
           '¬ required'
-        ]
+        ],
 
-        [                               # regex
-          /\d+/
+        [                               // regex
+          /\d+/,
           '¬ unmatched'
-        ]
+        ],
 
-        [                               # length
-          length: '@<3'
+        [                               // length
+          length: '@<3',
           '¬ too long'
-        ]
+        ],
 
-        [                               # comparison
-          compr: '@<3'
+        [                               // comparison
+          compr: '@<3',
           '¬ too long'
-        ]
+        ],
 
-        [                               # function
-          (obj, attr, options)->
-            # obj is person
-            # attr is age
-            # hash is {}
-          '¬ error'
+        [                               // function
+          function(obj, attr, options){
+            if (obj.get(attr) == ''){
+              return false;
+            }
+          }, '¬ error'
         ]
 
         ...
 
-      ]
+      ],
 
-  # create person and validate
-  person = Person.create()
-  person.validate()
-  errors  = get person, "_errors"
-  isValid = get person, "_isValid"
+  });
 
-  errors.get 'age'
+  // create person and validate
+  var person = Person.create()
+  person.validate();
+  var errors  = person.get('_errors');
+  var isValid = person.get('_isValid');
+
+  console.log(errors.get('age'));
   ...
 
 ```
 
 See [kelonye/ember-error-support](https://github.com/kelonye/ember-error-support) on use with text fields.
 
-Testing
+Test
 ---
 
 ```
-npm install && component install && make
+make && open test/support.html
 ```
+
+License
+---
+
+MIT
