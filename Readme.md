@@ -107,10 +107,8 @@ See [kelonye/ember-error-support](https://github.com/kelonye/ember-error-support
 
 Test
 ---
-
-```
-make && open test/support.html
-```
+  
+    $ make test
 
 License
 ---

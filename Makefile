@@ -12,7 +12,10 @@ components:
 public: $(lib)
 	@$(component) build --dev -n $@ -o $@
 
+test: default
+	@xdg-open test/support.html
+
 clean:
 	@rm -rf public
 
-.PHONY: clean
+.PHONY: clean test
