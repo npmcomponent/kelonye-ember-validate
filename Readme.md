@@ -1,8 +1,3 @@
-Ember Validate [![Build Status](https://secure.travis-ci.org/kelonye/ember-validate.png?branch=master)](http://travis-ci.org/kelonye/ember-validate)
-===
-
-Validate ember objects.
-
 Install
 ---
 
