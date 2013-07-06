@@ -56,26 +56,26 @@ Example
           }
         },
 
-        // you can provide custom error messages like so,
+        // you can specify custom error messages like so,
         
         [
           'presence',                    // presence
-          '¬ required'
+          'required'
         ],
 
         [                               // regex
           /\d+/,
-          '¬ unmatched'
+          'unmatched'
         ],
 
         [                               // length
           length: '@<3',
-          '¬ too long'
+          'too long'
         ],
 
         [                               // comparison
           compr: '@<3',
-          '¬ too long'
+          'too long'
         ],
 
         [                               // function
@@ -83,7 +83,7 @@ Example
             if (obj.get(attr) == ''){
               return false;
             }
-          }, '¬ error'
+          }, 'error'
         ]
 
         ...
