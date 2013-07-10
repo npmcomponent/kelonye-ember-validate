@@ -20,7 +20,6 @@ describe('compr:', function() {
   it('age is out of range', function() {
     person.set('age', 20);
     person.validate();
-    //console.log(person.get('_errors.age'));
     assert.equal(person.get('_errors.age'), '¬ !comparison: 20<10');
     assert.equal(person.get('_isValid'), false);
   });
