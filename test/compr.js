@@ -19,14 +19,16 @@ describe('compr:', function() {
   });
   it('age is out of range', function() {
     person.set('age', 20);
-    person.validate();
-    assert.equal(person.get('_errors.age'), '¬ !comparison: 20<10');
-    assert.equal(person.get('_isValid'), false);
+    person.validate(function(){
+      assert.equal(person.get('_errors.age'), '¬ !comparison: 20<10');
+      assert.equal(person.get('_isValid'), false);
+    });
   });
   it('age is ok', function() {
     person.set('age', 5);
-    person.validate();
-    assert.equal(person.get('_errors.age'), undefined);
-    assert.equal(person.get('_isValid'), true);
+    person.validate(function(){
+      assert.equal(person.get('_errors.age'), undefined);
+      assert.equal(person.get('_isValid'), true);
+    });
   });
 });

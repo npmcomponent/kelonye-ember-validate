@@ -17,13 +17,15 @@ describe('regex:', function() {
   });
   it('fail', function() {
     person.set('tel', '254000111222');
-    person.validate();
-    assert.equal(person.get('_isValid'), false);
+    person.validate(function(){
+      assert.equal(person.get('_isValid'), false);
+    });
   });
   it('pass', function() {
     person.set('tel', '254700111222');
-    person.validate();
-    assert.equal(person.get('_errors.tel'), undefined);
-    assert.equal(person.get('_isValid'), true);
+    person.validate(function(){
+      assert.equal(person.get('_errors.tel'), undefined);
+      assert.equal(person.get('_isValid'), true);
+    });
   });
 });
