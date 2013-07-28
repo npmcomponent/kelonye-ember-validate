@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "description": "Validate ember objects",
   "dependencies": {
-    "kelonye/ember": "*"
+    "kelonye/ember": "*",
+    "visionmedia/batch": "*"
   },
   "development": {
     "timoxley/assert": "*"

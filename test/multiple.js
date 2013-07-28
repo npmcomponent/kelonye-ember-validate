@@ -7,10 +7,11 @@ describe('multiple:', function() {
       validations: {
         name: ['presence'],
         tel: [
-          function(obj, attr, options) {
+          function(obj, attr, options, done) {
             if (!obj.get(attr)) {
-              return false;
+              return done(' ');
             }
+            done();
           }, [/^(?:0|\+?254)7\d{8}$/, 'cell no. is invalid']
         ]
       }
@@ -22,7 +23,7 @@ describe('multiple:', function() {
   });
   it('name absent', function() {
     person.validate();
-    assert.equal(person.get('_errors.name'), '');
+    assert.equal(person.get('_errors.name'), ' ');
     assert.equal(person.get('_errors.tel'), undefined);
     assert.equal(person.get('_isValid'), false);
   });
@@ -30,7 +31,7 @@ describe('multiple:', function() {
     person.set('name', 'TJ');
     person.validate();
     assert.equal(person.get('_errors.name'), undefined);
-    assert.equal(person.get('_errors.tel'), '');
+    assert.equal(person.get('_errors.tel'), ' ');
     assert.equal(person.get('_isValid'), false);
   });
   it('tel format is wrong', function() {

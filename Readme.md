@@ -5,12 +5,6 @@ Install
 component install kelonye/ember-validate
 ```
 
-Features
----
-
-* Custom error messages
-* Multiple validators per property
-
 Validators
 ---
 
@@ -45,15 +39,16 @@ Example
         compr: '@<=3',
         compr: '@>=3',
 
-        function(obj, attr, options){    // function validator
+        function(obj, attr, options, done){    // function validator
           /** here,
             * obj is a Person instance
             * attr is 'age'
             * options is {}
             */
           if (obj.get(attr) == ''){
-            return false;
+            return done(false);
           }
+          done(true);
         },
 
         // you can specify custom error messages like so,
@@ -79,10 +74,11 @@ Example
         ],
 
         [                               // function
-          function(obj, attr, options){
+          function(obj, attr, options, done){
             if (obj.get(attr) == ''){
-              return false;
+              return done(false);
             }
+            done(true);
           }, 'error'
         ]
 

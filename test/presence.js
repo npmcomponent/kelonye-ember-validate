@@ -17,11 +17,11 @@ describe('presence:', function() {
   });
   it('name is absent', function() {
     person.validate();
-    assert.equal(person.get('_errors.name'), '');
+    assert.equal(person.get('_errors.name'), ' ');
     assert.equal(person.get('_isValid'), false);
     person.set('name', '  ');
     person.validate();
-    assert.equal(person.get('_errors.name'), '');
+    assert.equal(person.get('_errors.name'), ' ');
     assert.equal(person.get('_isValid'), false);
   });
   it('name is present', function() {
