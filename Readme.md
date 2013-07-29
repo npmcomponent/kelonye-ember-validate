@@ -90,12 +90,11 @@ Example
 
   // create person and validate
   var person = Person.create()
-  person.validate();
-  var errors  = person.get('_errors');
-  var isValid = person.get('_isValid');
-
-  console.log(errors.get('age'));
-  ...
+  person.validate(function(){
+    var errors  = person.get('_errors');
+    var isValid = person.get('_isValid');
+    console.log(errors.get('age'));
+  });
 
 ```
 
