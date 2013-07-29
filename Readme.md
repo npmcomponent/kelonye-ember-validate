@@ -46,9 +46,9 @@ Example
             * options is {}
             */
           if (obj.get(attr) == ''){
-            return done(false);
+            return done('required');
           }
-          done(true);
+          done();
         },
 
         // you can specify custom error messages like so,
@@ -76,9 +76,9 @@ Example
         [                               // function
           function(obj, attr, options, done){
             if (obj.get(attr) == ''){
-              return done(false);
+              return done('required');
             }
-            done(true);
+            done();
           }, 'error'
         ]
 
