@@ -1,18 +1,7 @@
 Install
 ---
 
-```
-component install kelonye/ember-validate
-```
-
-Validators
----
-
-* Presence
-* Email
-* Regex
-* Length
-* Comparison
+    $ component install kelonye/ember-validate
 
 Example
 ---
@@ -25,71 +14,39 @@ Example
 
       age: [
 
-        'presence',                      // presence
-
-        /\d+/,                           // regex
-
-        length: '@<3',                   // length
-        length: '@>3',
-        length: '@<=3',
-        length: '@>=3',
-
-        compr: '@<3',                    // comparison
-        compr: '@>3',
-        compr: '@<=3',
-        compr: '@>=3',
-
-        function(obj, attr, options, done){    // function validator
-          /** here,
-            * obj is a Person instance
-            * attr is 'age'
-            * options is {}
-            */
-          if (obj.get(attr) == ''){
-            return done('required');
+        // client side validation
+        function(obj, attr, options, done){
+          var age = obj.get(attr); // obj.get('age')
+          if ((20 <= age) || (age <= 30)){
+            return done('Age should be between 20 and 30');
           }
           done();
         },
 
-        // you can specify custom error messages like so,
-        
-        [
-          'presence',                    // presence
-          'required'
-        ],
-
-        [                               // regex
-          /\d+/,
-          'unmatched'
-        ],
-
-        [                               // length
-          length: '@<3',
-          'too long'
-        ],
-
-        [                               // comparison
-          compr: '@<3',
-          'too long'
-        ],
-
-        [                               // function
-          function(obj, attr, options, done){
-            if (obj.get(attr) == ''){
-              return done('required');
-            }
+        // server side validation
+        function(obj, attr, options, done){
+          var age = obj.get(attr);
+          function success(res){
             done();
-          }, 'error'
-        ]
+          }
+          function error(error){
+            done(error)
+          }
+          Em.ajax({
+            url: '/validate-age/' + age
+            type: 'GET',
+            success: success,
+            error: error
+          });
+        },   
 
-        ...
 
       ],
 
   });
 
   // create person and validate
-  var person = Person.create()
+  var person = Person.create();
   person.validate(function(){
     var errors  = person.get('_errors');
     var isValid = person.get('_isValid');
