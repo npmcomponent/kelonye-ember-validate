@@ -1,10 +1,10 @@
 {
   "name": "ember-validate",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Validate ember objects",
   "dependencies": {
-    "kelonye/ember": "*",
-    "visionmedia/batch": "*"
+    "kelonye/ember": "1.0.0-rc6",
+    "visionmedia/batch": "0.5.0"
   },
   "development": {
     "timoxley/assert": "*"
