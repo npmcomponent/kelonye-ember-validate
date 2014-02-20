@@ -1,10 +1,11 @@
 {
-  "name": "ember-validate",
-  "version": "0.0.6",
+  "name": "kelonye-ember-validate",
   "description": "Validate ember objects",
-  "devDependencies": {
-    "mocha": "*",
-    "component-hooks": "*"
+  "version": "0.0.6",
+  "main": "lib/index.js",
+  "dependencies": {
+    "kelonye-ember": "git://github.com/npmcomponent/kelonye-ember.git",
+    "visionmedia-batch": "git://github.com/npmcomponent/visionmedia-batch.git"
   },
   "license": "MIT"
 }
